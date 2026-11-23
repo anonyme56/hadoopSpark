@@ -1,0 +1,81 @@
+{
+  "resultats": [
+    {
+      "modele": "Regression logistique",
+      "auc_roc": 0.9957,
+      "auc_pr": 0.81,
+      "rappel": 1.0,
+      "precision": 0.2139,
+      "f1": 0.3525,
+      "TP": 264,
+      "FN": 0,
+      "FP": 970,
+      "TN": 18694,
+      "temps_entrainement_s": 9.9
+    },
+    {
+      "modele": "Random Forest",
+      "auc_roc": 0.9987,
+      "auc_pr": 0.9069,
+      "rappel": 1.0,
+      "precision": 0.588,
+      "f1": 0.7405,
+      "TP": 264,
+      "FN": 0,
+      "FP": 185,
+      "TN": 19479,
+      "temps_entrainement_s": 9.2
+    }
+  ],
+  "importance_rf": [
+    [
+      "compte_vide",
+      0.36667445119348935
+    ],
+    [
+      "ratio_montant_solde",
+      0.26576095860918725
+    ],
+    [
+      "ecart_moyenne",
+      0.08477331439342511
+    ],
+    [
+      "type=PAYMENT",
+      0.07340128361216539
+    ],
+    [
+      "erreur_solde_dest",
+      0.05143343719420411
+    ],
+    [
+      "erreur_solde_orig",
+      0.04878542365203203
+    ],
+    [
+      "log_montant",
+      0.03608689711035873
+    ],
+    [
+      "type=CASH_OUT",
+      0.028162000365164433
+    ],
+    [
+      "type=TRANSFER",
+      0.024248825900794028
+    ],
+    [
+      "type=CASH_IN",
+      0.01857969601829264
+    ],
+    [
+      "heure",
+      0.001582947724956748
+    ],
+    [
+      "freq_horaire",
+      0.0005107642259303006
+    ]
+  ],
+  "modele_retenu": "Random Forest"
+}

@@ -1,0 +1,16 @@
+Noeuds : 3454 | Arcs : 2733
+Composantes connexes : 785
+Communautes (modularite gloutonne) : 841 | Q = 0.957
+
+Top 10 comptes par fraudes recues (hubs suspects) :
+      id  in_degree  fraudes_in  total_recu  modularity_class
+C9000006         96          97  6353177.88                 0
+C9000009         94          94  5027969.53                 1
+C9000010         93          93  6621844.25                 3
+C9000002         90          90  5958682.81                 5
+C9000008         87          87  7740188.21                 6
+C9000003         85          86  7477180.94                 8
+C9000005         84          84  6154583.83                 7
+C9000007         83          84  5060199.81                 2
+C9000001         83          83  6000106.22                 4
+C9000004         66          67  4632979.25                 9

@@ -1,0 +1,157 @@
+# Plateforme Big Data - detection de fraude (Hexa / Bloc 1)
+# Ingestion : Zookeeper + Kafka | Data Lake : HDFS | Traitement : Spark | Data Lab : MongoDB
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop:latest
+    container_name: kafdrop
+    depends_on:
+      - kafka
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka:29092
+
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    ports:
+      - "9870:9870"   # interface web HDFS
+      - "9001:9000"   # RPC (9000 cote conteneur)
+    environment:
+      - CLUSTER_NAME=fraude
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - HDFS_CONF_dfs_replication=1
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    depends_on:
+      - namenode
+    ports:
+      - "9864:9864"
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - HDFS_CONF_dfs_replication=1
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+
+  spark-master:
+    build: .
+    container_name: spark-master
+    user: root
+    depends_on:
+      - kafka
+      - namenode
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+      - "4040:4040"
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    volumes:
+      - ./:/opt/spark/work-dir
+
+  spark-worker:
+    build: .
+    container_name: spark-worker
+    user: root
+    depends_on:
+      - spark-master
+    ports:
+      - "8081:8081"
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    environment:
+      - SPARK_WORKER_MEMORY=2g
+      - SPARK_WORKER_CORES=2
+    volumes:
+      - ./:/opt/spark/work-dir
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-gui
+    restart: always
+    depends_on:
+      - mongodb
+    ports:
+      - "8082:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+
+  # Base relationnelle (donnees structurees, schema normalise : sql/schema.sql)
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_USER: fraude
+      POSTGRES_PASSWORD: fraude      # mot de passe de TEST : a changer / mettre dans un secret en production
+      POSTGRES_DB: fraude
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fraude"]
+      interval: 5s
+      retries: 10
+
+  # API REST (cle d'API + quotas) : http://localhost:8000/docs
+  api:
+    image: python:3.12-slim
+    container_name: fraud-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    working_dir: /app
+    environment:
+      DB_URL: postgresql+psycopg2://fraude:fraude@postgres:5432/fraude
+      API_KEYS: "${API_KEYS:-cle-lecteur-CHANGEME:lecteur,cle-admin-CHANGEME:admin}"
+      API_QUOTA: "${API_QUOTA:-60}"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+    command: sh -c "pip install -q fastapi uvicorn sqlalchemy psycopg2-binary && uvicorn --app-dir api fraud_api:app --host 0.0.0.0 --port 8000"
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode:
+  mongo_data:
+  pg_data:
+
+networks:
+  default:
+    name: spark-network
+    driver: bridge

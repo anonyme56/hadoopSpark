@@ -1,0 +1,3 @@
+passage 1 : 50000 lignes (50000 ids distincts)
+passage 2 : 100000 lignes (100000 ids distincts)
+RESULTAT : OK - reprise sans perte ni doublon

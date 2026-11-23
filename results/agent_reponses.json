@@ -1,0 +1,32 @@
+[
+  {
+    "transaction_id": 49121,
+    "type": "TRANSFER",
+    "montant": 274486.66,
+    "vraie_fraude": 1,
+    "motifs": [
+      "le compte a ete entierement vide par l'operation",
+      "le montant represente 100% du solde disponible",
+      "le montant est tres superieur aux habitudes du compte",
+      "type d'operation a risque (TRANSFER)"
+    ],
+    "explication_conseiller": "La transaction 49121 (TRANSFER de 274486.66 EUR) a ete signalee par le modele car : le compte a ete entierement vide par l'operation; le montant represente 100% du solde disponible; le montant est tres superieur aux habitudes du compte; type d'operation a risque (TRANSFER). Ce n'est pas une certitude de fraude : nous conseillons de contacter le client pour verifier l'operation avant de la valider definitivement.",
+    "email_client": "Objet : Verification d'une operation sur votre compte\n\nBonjour,\n\nUne operation de 274486.66 EUR (TRANSFER) a ete detectee sur votre compte et nous semble inhabituelle. Par precaution, merci de confirmer ou de refuser cette operation directement dans votre application Hexa-Bank, rubrique \"Operations a verifier\".\n\nPour votre securite, ce message ne contient aucun lien et nous ne vous demanderons jamais votre mot de passe, vos codes ou vos coordonnees bancaires.\n\nLe service securite Hexa-Bank",
+    "fournisseur": "template"
+  },
+  {
+    "transaction_id": 20114,
+    "type": "TRANSFER",
+    "montant": 264814.79,
+    "vraie_fraude": 1,
+    "motifs": [
+      "le compte a ete entierement vide par l'operation",
+      "le montant represente 100% du solde disponible",
+      "le montant est tres superieur aux habitudes du compte",
+      "type d'operation a risque (TRANSFER)"
+    ],
+    "explication_conseiller": "La transaction 20114 (TRANSFER de 264814.79 EUR) a ete signalee par le modele car : le compte a ete entierement vide par l'operation; le montant represente 100% du solde disponible; le montant est tres superieur aux habitudes du compte; type d'operation a risque (TRANSFER). Ce n'est pas une certitude de fraude : nous conseillons de contacter le client pour verifier l'operation avant de la valider definitivement.",
+    "email_client": "Objet : Verification d'une operation sur votre compte\n\nBonjour,\n\nUne operation de 264814.79 EUR (TRANSFER) a ete detectee sur votre compte et nous semble inhabituelle. Par precaution, merci de confirmer ou de refuser cette operation directement dans votre application Hexa-Bank, rubrique \"Operations a verifier\".\n\nPour votre securite, ce message ne contient aucun lien et nous ne vous demanderons jamais votre mot de passe, vos codes ou vos coordonnees bancaires.\n\nLe service securite Hexa-Bank",
+    "fournisseur": "template"
+  }
+]

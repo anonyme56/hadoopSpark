@@ -1,0 +1,14 @@
+train : 80072 lignes dont 973 fraudes (1.22%)
+poids de la classe fraude : 81.3
+{"modele": "Regression logistique", "auc_roc": 0.9957, "auc_pr": 0.81, "rappel": 1.0, "precision": 0.2139, "f1": 0.3525, "TP": 264, "FN": 0, "FP": 970, "TN": 18694, "temps_entrainement_s": 9.9}
+{"modele": "Random Forest", "auc_roc": 0.9987, "auc_pr": 0.9069, "rappel": 1.0, "precision": 0.588, "f1": 0.7405, "TP": 264, "FN": 0, "FP": 185, "TN": 19479, "temps_entrainement_s": 9.2}
+importance des variables (RF) :
+  compte_vide            0.367
+  ratio_montant_solde    0.266
+  ecart_moyenne          0.085
+  type=PAYMENT           0.073
+  erreur_solde_dest      0.051
+  erreur_solde_orig      0.049
+modele retenu : Random Forest
+modele sauvegarde dans out_model
+alertes ecrites : results/alertes_fraude.csv

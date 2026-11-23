@@ -1,0 +1,4 @@
+transactions lues dans le data lake : 100000
+noeuds : 8510 | arcs : 99745
+arcs impliques dans au moins une fraude : 1233
+ecriture terminee ( json )

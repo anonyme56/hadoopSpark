@@ -1,0 +1,18 @@
+# Cluster Docker : tout est dans l'image Spark (voir Dockerfile).
+# Execution locale / tests :
+pyspark==3.5.1
+pyarrow
+pandas
+numpy
+networkx
+matplotlib
+requests
+kafka-python
+pymongo
+sqlalchemy
+psycopg2-binary
+fastapi
+uvicorn
+httpx
+pytest
+python-pptx

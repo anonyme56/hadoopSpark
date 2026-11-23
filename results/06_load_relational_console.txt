@@ -1,0 +1,5 @@
+transaction_types  5 lignes
+accounts           8510 lignes
+transactions       100000 lignes
+fraud_alerts       200 lignes
+charge en 1.9 s

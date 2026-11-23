@@ -1,0 +1,1 @@
+Streaming local[2] : 100000 messages en 28.0 s soit 3577 msg/s (demarrage JVM inclus, 2 requetes en parallele)

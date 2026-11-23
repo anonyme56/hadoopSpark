@@ -1,0 +1,24 @@
+# donnees volumineuses / generees
+data/
+out_lake/
+out_graph/
+out_model/
+out_resilience/
+fraude.db
+results/gephi/*.gexf
+# resultats : logs console et captures (pas les csv/json de donnees)
+results/*.txt
+results/*.png
+results/gephi/*.txt
+results/gephi/*.png
+__pycache__/
+.pytest_cache/
+*.pyc
+node_modules/
+# secrets
+.env
+# rapport (genere localement, pas verse au depot)
+Rapport_Projet_Fraude_Bloc1.md
+Rapport_Projet_Fraude_Bloc1.pdf
+Projet_Hadoop_Spark_Validation_Bloc1.pdf
+docs/
